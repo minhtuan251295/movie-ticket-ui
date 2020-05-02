@@ -1,13 +1,65 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
+
+// redux
+import { createStore, applyMiddleware } from "redux";
+import { Provider } from "react-redux";
+import { rootReducer } from "./reducers";
+import { composeWithDevTools } from "redux-devtools-extension";
+import thunk from "redux-thunk";
+
+//react-router-dom
+import { BrowserRouter, Switch, Route } from 'react-router-dom'
+
+// component
 import App from './App';
+import Navbar from "./components/Navbar";
+
+import api from "./api";
+import jwtDecode from "jwt-decode";
 import * as serviceWorker from './serviceWorker';
+import './style/main.scss';
+
+const composeEnhancers = composeWithDevTools({
+  // Specify name here, actionsBlacklist, actionsCreators and other options if needed
+})
+
+const store = createStore(
+  rootReducer,
+  composeEnhancers(applyMiddleware(thunk))
+)
+
+// const token = localStorage.getItem("tokenBusTicket");
+// if (token) {
+//   api.defaults.headers.common["token"] = token;
+//   api.defaults.headers.common["Content-Type"] = "application/json";
+//   const dataUser = jwtDecode(token);
+//   store.dispatch(getInformationUser(dataUser));
+// }
 
 ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
+  <Provider store={store}>
+    <BrowserRouter>
+      {/* <Navbar /> */}
+      <div className="bus-content">
+        <Switch>
+          {/* <Route path="/signin" exact component={SignIn} />
+          <Route path="/signup" exact component={SignUp} />
+          <Guard path="/trips" exact>
+            <TripContainer />
+          </Guard>
+          <Guard path="/account" exact>
+            <Account />
+          </Guard>
+          <Guard path="/admin">
+            <Admin />
+          </Guard> */}
+          <Route path="/" exact component={App} />
+        </Switch>
+      </div>
+    </BrowserRouter>
+    {/* <Message /> */}
+  </Provider>,
   document.getElementById('root')
 );
 
