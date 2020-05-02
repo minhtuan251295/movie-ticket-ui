@@ -11,14 +11,19 @@ import thunk from "redux-thunk";
 //react-router-dom
 import { BrowserRouter, Switch, Route } from 'react-router-dom'
 
-// component
-import App from './App';
-import Navbar from "./components/Navbar";
 
-import api from "./api";
-import jwtDecode from "jwt-decode";
+// import api from "./api";
+// import jwtDecode from "jwt-decode";
 import * as serviceWorker from './serviceWorker';
-import './style/main.scss';
+import './styles/main.scss';
+
+// component
+import App from './layouts/App/App';
+import Navbar from "./components/Navbar";
+import Admin from './layouts/admin';
+import SignIn from './layouts/auth/SignIn';
+import SignUp from './layouts/auth/SignUp';
+import Message from './components/Message';
 
 const composeEnhancers = composeWithDevTools({
   // Specify name here, actionsBlacklist, actionsCreators and other options if needed
@@ -40,25 +45,26 @@ const store = createStore(
 ReactDOM.render(
   <Provider store={store}>
     <BrowserRouter>
-      {/* <Navbar /> */}
+      <Navbar />
       <div className="bus-content">
         <Switch>
-          {/* <Route path="/signin" exact component={SignIn} />
+          <Route path="/signin" exact component={SignIn} />
           <Route path="/signup" exact component={SignUp} />
-          <Guard path="/trips" exact>
+          {/* <Guard path="/trips" exact>
             <TripContainer />
           </Guard>
           <Guard path="/account" exact>
             <Account />
-          </Guard>
+          </Guard>  
           <Guard path="/admin">
-            <Admin />
+            <Admin /> 
           </Guard> */}
+          <Route path="/admin" component={Admin} />
           <Route path="/" exact component={App} />
         </Switch>
       </div>
     </BrowserRouter>
-    {/* <Message /> */}
+    <Message />
   </Provider>,
   document.getElementById('root')
 );
