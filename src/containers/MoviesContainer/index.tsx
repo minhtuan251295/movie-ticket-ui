@@ -1,23 +1,24 @@
 import * as React from 'react';
-import GenreManagement from "../../components/GenreManagement";
 import GeneralActions from "../../actions/generalActions";
 import ITFGeneralActions from "../../interfaces/generalActions";
+import MovieManagement from "../../components/MovieManagement";
 
-interface IGenresContainerProps {
+interface IMoviesContainerProps {
 }
 
-const GenresContainer: React.FunctionComponent<IGenresContainerProps & ITFGeneralActions> = (props) => {
+const MoviesContainer: React.FunctionComponent<IMoviesContainerProps & ITFGeneralActions> = (props) => {
   const getData = props.getData;
 
   React.useEffect(() => {
+    getData("movies");
     getData("genres");
   }, [getData])
 
   return (
     <React.Fragment>
-      <GenreManagement />
+      <MovieManagement />
     </React.Fragment>
   );
 };
 
-export default GeneralActions(GenresContainer);
+export default GeneralActions(MoviesContainer);

@@ -9,7 +9,7 @@ import AddCircleOutline from '@material-ui/icons/AddCircleOutline';
 import Button from '@material-ui/core/Button';
 
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
-import TableGenre from './TableGenre';
+import TableMovie from './TableMovie';
 import Modal from '../Modal';
 
 import GeneralActions from "../../actions/generalActions";
@@ -23,18 +23,18 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 );
 
-interface IGenreProps {
+interface IMovieProps {
   toggleModal: (value: boolean) => void
 }
 
-const GenreManagement: React.FunctionComponent<IGenreProps & ITFGeneralActions> = (props) => {
+const MovieManagement: React.FunctionComponent<IMovieProps & ITFGeneralActions> = (props) => {
   const classes = useStyles();
 
   return (
     <React.Fragment>
       <div className="content-admin__header">
         <Typography variant="h4" gutterBottom>
-          All genres
+          All movies
         </Typography>
         <Button
           variant="contained"
@@ -43,17 +43,17 @@ const GenreManagement: React.FunctionComponent<IGenreProps & ITFGeneralActions> 
           startIcon={<AddCircleOutline />}
           onClick={() => {
             props.toggleModal(true);
-            props.resetData("genre")
+            props.resetData("movie")
           }}
         >
-          New Genre
+          New movie
         </Button>
       </div>
       <Modal />
-      <TableGenre />
+      <TableMovie />
 
     </React.Fragment>
   );
 };
 
-export default connect(null, { toggleModal })(GeneralActions(GenreManagement));
+export default connect(null, { toggleModal })(GeneralActions(MovieManagement));

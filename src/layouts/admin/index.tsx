@@ -7,8 +7,7 @@ import { Switch, Route } from 'react-router-dom'
 import Sidebar from "../../components/Sidebar";
 import DashBoard from '../../components/Dashboard';
 import GenresContainer from '../../containers/GenresContainer';
-// import StationContainer from '../../containers/StationContainer';
-// import TripContainer from '../../containers/TripContainer';
+import MoviesContainer from '../../containers/MoviesContainer';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -39,7 +38,7 @@ const Admin = (props: AdminProps) => {
         <Switch>
           <Route path="/admin/dashboard" exact component={DashBoard} />
           <Route path="/admin/genres" exact component={GenresContainer} />
-          {/* <Route path="/admin/movies" exact component={TripContainer} /> */}
+          <Route path="/admin/movies" exact component={MoviesContainer} />
         </Switch>
       </main>
     </div>

@@ -1,5 +1,5 @@
-import * as Types from "../constants/genre";
-import * as ITF from "../interfaces/genre";
+import Types from "../constants/general";
+import * as ITF from "../interfaces/general";
 
 const initialState: Array<ITF.Genre> = []
 
@@ -17,7 +17,7 @@ const GenreReducer = (state = initialState, action: any) => {
     case Types.UPDATE_GENRE:
       let newGenres = [...state];
       let index = newGenres.findIndex((genre) => genre.id === Number(action.payload.id));
-      const newGenre = { ...action.payload.data, _id: action.payload.id }
+      const newGenre = { ...action.payload.data, id: action.payload.id }
       newGenres[index] = newGenre;
       return newGenres;
 

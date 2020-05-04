@@ -6,7 +6,7 @@ import { toggleModal } from "../../actions/main";
 import _ from "lodash";
 
 import ModalGenre from "./ModalGenre";
-
+import ModalMovie from "./ModalMovie";
 
 interface ModalProps {
   openModal: boolean,
@@ -21,7 +21,7 @@ const Modal = (props: ModalProps) => {
 
   return (
     <Dialog open={props.openModal} onClose={() => props.toggleModal(false)} aria-labelledby="form-dialog-title">
-      <ModalGenre />
+      {type === "genres" ? <ModalGenre /> : <ModalMovie />}
     </Dialog>
   );
 }

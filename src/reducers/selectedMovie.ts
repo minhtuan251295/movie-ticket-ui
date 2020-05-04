@@ -1,11 +1,11 @@
 import Types from "../constants/general";
 import * as ITF from "../interfaces/general";
 
-const initialState: ITF.Genre = {} as ITF.Genre
+const initialState: ITF.Movie = {} as ITF.Movie
 
-const selectedGenre = (state = initialState, action: any) => {
+const selectedMovie = (state = initialState, action: any) => {
   switch (action.type) {
-    case Types.GET_GENRE_BY_ID:
+    case Types.GET_MOVIE_BY_ID:
       return action.payload;
 
     default:
@@ -13,4 +13,4 @@ const selectedGenre = (state = initialState, action: any) => {
   }
 }
 
-export default selectedGenre;
+export default selectedMovie;

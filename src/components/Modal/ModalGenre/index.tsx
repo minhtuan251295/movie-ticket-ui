@@ -7,22 +7,21 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 
 import { connect } from "react-redux";
-import { addGenre, updateGenre } from "../../../actions/genre";
 import { toggleModal } from "../../../actions/main";
 
 import _ from "lodash";
 
-import * as ITF from "../../../interfaces/genre";
+import * as ITF from "../../../interfaces/general";
+import GeneralActions from "../../../actions/generalActions";
+import ITFGeneralActions from "../../../interfaces/generalActions";
 
 interface IModalGenreProps {
   genres: Array<ITF.Genre>,
   selectedGenre: ITF.Genre,
-  addGenre: (dataGenre: ITF.Genre) => void,
-  updateGenre: (dataGenre: ITF.Genre, id: string) => void,
   toggleModal: (value: boolean) => void,
 }
 
-const ModalGenre: React.FunctionComponent<IModalGenreProps> = (props) => {
+const ModalGenre: React.FunctionComponent<IModalGenreProps & ITFGeneralActions> = (props) => {
 
   const [dataGenre, setDataGenre] = React.useState({
     name: "",
@@ -35,11 +34,11 @@ const ModalGenre: React.FunctionComponent<IModalGenreProps> = (props) => {
   };
 
   const createNewGenre = () => {
-    props.addGenre(dataGenre);
+    props.createData("genres", "genre", dataGenre);
   }
 
   const updateNewGenre = () => {
-    props.updateGenre(dataGenre, _.get(props, "selectedGenre.id", ""))
+    props.updateData("genres", "genre", dataGenre, _.get(props, "selectedGenre.id", ""))
   }
 
   React.useEffect(() => {
@@ -60,7 +59,9 @@ const ModalGenre: React.FunctionComponent<IModalGenreProps> = (props) => {
 
   return (
     <React.Fragment>
-      <DialogTitle id="form-dialog-title">Add new genre</DialogTitle>
+      <DialogTitle id="form-dialog-title">
+        {_.isEmpty(props.selectedGenre) ? "Add new genre" : "Update genre"}
+      </DialogTitle>
       <DialogContent>
 
         <TextField
@@ -106,4 +107,4 @@ const mapStateToProps = (state: any) => {
   }
 }
 
-export default connect(mapStateToProps, { toggleModal, addGenre, updateGenre })(ModalGenre);
+export default connect(mapStateToProps, { toggleModal })(GeneralActions(ModalGenre));

@@ -17,14 +17,24 @@ import { toggleModal } from "../../../actions/main";
 import GeneralActions from "../../../actions/generalActions";
 import ITFGeneralActions from "../../../interfaces/generalActions";
 
-interface ITableGenreProps {
+import _ from "lodash";
+
+import M from "moment/moment";
+
+interface ITableMovieProps {
+  movies: Array<ITF.Movie>,
   genres: Array<ITF.Genre>,
   toggleModal: (value: boolean) => void,
 }
 
 interface Data {
   name: string,
-  imageURL: string,
+  director: string,
+  genre: number,
+  imdb: number,
+  premiereDate: string,
+  description: string,
+  duration: number,
   actions: string,
 }
 
@@ -35,8 +45,13 @@ interface HeadCell {
 }
 
 const headCells: HeadCell[] = [
-  { id: 'name', numeric: false, label: 'Name genre' },
-  { id: 'imageURL', numeric: false, label: 'Image' },
+  { id: 'name', numeric: false, label: 'Name Movie' },
+  { id: 'director', numeric: false, label: 'Director' },
+  { id: 'genre', numeric: false, label: 'Genre' },
+  { id: 'imdb', numeric: true, label: 'Imdb' },
+  { id: 'premiereDate', numeric: false, label: 'Premiere date' },
+  { id: 'description', numeric: false, label: 'Description' },
+  { id: 'duration', numeric: true, label: 'Duration' },
   { id: 'actions', numeric: false, label: 'Actions' },
 ];
 
@@ -85,7 +100,7 @@ const useStyles = makeStyles((theme: Theme) =>
       top: 20,
       width: 1,
     },
-    imageGenre: {
+    imageMovie: {
       maxWidth: 200,
     },
     button: {
@@ -95,8 +110,7 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 
-const TableGenre: React.FunctionComponent<ITableGenreProps & ITFGeneralActions> = (props) => {
-
+const TableMovie: React.FunctionComponent<ITableMovieProps & ITFGeneralActions> = (props) => {
   const classes = useStyles();
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
@@ -110,11 +124,11 @@ const TableGenre: React.FunctionComponent<ITableGenreProps & ITFGeneralActions> 
     setPage(0);
   };
 
-  const onDeleteGenre = (id: string) => {
-    props.deleteData("genres", "genre", id);
+  const onDeleteMovie = (id: string) => {
+    props.deleteData("movies", "movie", id);
   }
 
-  const emptyRows = rowsPerPage - Math.min(rowsPerPage, props.genres.length - page * rowsPerPage);
+  const emptyRows = rowsPerPage - Math.min(rowsPerPage, props.movies.length - page * rowsPerPage);
 
   return (
     <React.Fragment>
@@ -128,12 +142,14 @@ const TableGenre: React.FunctionComponent<ITableGenreProps & ITFGeneralActions> 
             >
               <EnhancedTableHead
                 classes={classes}
-                rowCount={props.genres.length}
+                rowCount={props.movies.length}
               />
               <TableBody>
                 {
-                  props.genres.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                  (props.movies && !_.isEmpty(props.genres)) &&
+                  props.movies.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                     .map((row, index) => {
+                      const genre: any = props.genres.find((genre: ITF.Genre) => genre.id === row.genreId);
                       return (
                         <TableRow
                           hover
@@ -142,14 +158,19 @@ const TableGenre: React.FunctionComponent<ITableGenreProps & ITFGeneralActions> 
                           key={index}
                         >
                           <TableCell align="left">{row.name}</TableCell>
+                          <TableCell align="left">{row.director}</TableCell>
+                          <TableCell align="left">{genre.name}</TableCell>
+                          <TableCell align="right">{row.imdb}</TableCell>
                           <TableCell align="left">
-                            <img src={row.imageURL} className={classes.imageGenre} alt={`${index}`} />
+                            {M(row.premiereDate, "YYYY-MM-DDTHH:mm:ss").format("DD/MM/YYYY")}
                           </TableCell>
+                          <TableCell align="left">{row.description}</TableCell>
+                          <TableCell align="right">{row.duration}</TableCell>
                           <TableCell align="left">
-                            <Button color="secondary" onClick={() => onDeleteGenre(row.id?.toString() || "")}>Delete</Button>
+                            <Button color="secondary" onClick={() => onDeleteMovie(row.id?.toString() || "")}>Delete</Button>
                             <Button color="primary" onClick={() => {
                               props.toggleModal(true);
-                              props.getDataById("genres", "genre", row.id?.toString() || "")
+                              props.getDataById("movies", "movie", row.id?.toString() || "")
                             }}>Edit</Button>
                           </TableCell>
                         </TableRow>
@@ -166,7 +187,7 @@ const TableGenre: React.FunctionComponent<ITableGenreProps & ITFGeneralActions> 
           <TablePagination
             rowsPerPageOptions={[5, 10, 25]}
             component="div"
-            count={props.genres.length}
+            count={props.movies.length}
             rowsPerPage={rowsPerPage}
             page={page}
             onChangePage={handleChangePage}
@@ -179,7 +200,10 @@ const TableGenre: React.FunctionComponent<ITableGenreProps & ITFGeneralActions> 
 };
 
 const mapStateToProps = (state: any) => {
-  return { genres: state.genres }
+  return {
+    movies: state.movies,
+    genres: state.genres,
+  }
 }
 
-export default connect(mapStateToProps, { toggleModal })(GeneralActions(TableGenre));
+export default connect(mapStateToProps, { toggleModal })(GeneralActions(TableMovie));
