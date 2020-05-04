@@ -22,7 +22,7 @@ export const login = (dataUser: ITF.User, callback?: () => void) => {
       .then((data: any) => {
         dispatch({
           type: TypesMain.TOGGLE_SNACKBAR,
-          payload: { value: true, message: `Welcome back, ${data.fullName}!` },
+          payload: { value: true, message: `Welcome back, ${data.name}!` },
         })
         _.debounce(() => {
           dispatch({

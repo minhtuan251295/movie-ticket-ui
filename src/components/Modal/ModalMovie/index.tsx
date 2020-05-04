@@ -35,6 +35,7 @@ const ModalMovie: React.FunctionComponent<IModalMovieProps & ITFGeneralActions> 
   const [dataMovie, setDataMovie] = React.useState({
     name: "",
     director: "",
+    imageURL: "",
     genreId: 0,
     imdb: 0,
     duration: 0,
@@ -67,6 +68,7 @@ const ModalMovie: React.FunctionComponent<IModalMovieProps & ITFGeneralActions> 
         ...prevState,
         name: _.get(props, "selectedMovie.name", ""),
         director: _.get(props, "selectedMovie.director", ""),
+        imageURL: _.get(props, "selectedMovie.imageURL", ""),
         genreId: _.get(props, "selectedMovie.genreId", ""),
         imdb: _.get(props, "selectedMovie.imdb", 0),
         duration: _.get(props, "selectedMovie.duration", 0),
@@ -79,6 +81,7 @@ const ModalMovie: React.FunctionComponent<IModalMovieProps & ITFGeneralActions> 
         name: "",
         director: "",
         genreId: 0,
+        imageURL: "",
         imdb: 0,
         duration: 0,
         description: "",
@@ -155,10 +158,18 @@ const ModalMovie: React.FunctionComponent<IModalMovieProps & ITFGeneralActions> 
             </form>
           </Grid>
 
-          <TextField id="description" label="Description" className="mb-1 w-100"
-            multiline rows={3} value={dataMovie.description} name="description"
-            variant="outlined" onChange={handleChange}
-          />
+          <Grid item xs={12}>
+            <TextField
+              id="imageURL" label="URL of image" type="text"
+              fullWidth variant="outlined" name="imageURL" className="mb-1" value={dataMovie.imageURL}
+              onChange={handleChange}
+            />
+
+            <TextField id="description" label="Description" className="mb-1 w-100"
+              multiline rows={3} value={dataMovie.description} name="description"
+              variant="outlined" onChange={handleChange}
+            />
+          </Grid>
         </Grid>
 
       </DialogContent>

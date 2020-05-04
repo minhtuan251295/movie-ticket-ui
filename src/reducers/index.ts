@@ -15,6 +15,8 @@ import selectedRoom from "./selectedRoom";
 import selectedSchedule from "./selectedSchedule";
 import selectedUser from "./selectedUser";
 
+import UserInformation from "./auth";
+
 
 export const rootReducer = combineReducers({
   main: main,
@@ -30,5 +32,6 @@ export const rootReducer = combineReducers({
   selectedCinema: selectedCinema,
   selectedRoom: selectedRoom,
   selectedSchedule: selectedSchedule,
-  selectedUser: selectedUser
+  selectedUser: selectedUser,
+  userInformation: UserInformation
 });

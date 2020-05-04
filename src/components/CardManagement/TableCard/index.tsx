@@ -9,7 +9,6 @@ import TableHead from '@material-ui/core/TableHead';
 import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-import Button from '@material-ui/core/Button';
 import { connect } from "react-redux";
 import * as ITF from "../../../interfaces/general";
 import { toggleModal } from "../../../actions/main";
@@ -113,9 +112,9 @@ const TableCard: React.FunctionComponent<ITableCardProps & ITFGeneralActions> = 
     setPage(0);
   };
 
-  const onDeleteCard = (id: string) => {
-    props.deleteData("cards", "card", id);
-  }
+  // const onDeleteCard = (id: string) => {
+  //   props.deleteData("cards", "card", id);
+  // }
 
   const emptyRows = rowsPerPage - Math.min(rowsPerPage, props.cards.length - page * rowsPerPage);
 

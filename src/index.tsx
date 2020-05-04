@@ -13,7 +13,7 @@ import { BrowserRouter, Switch, Route } from 'react-router-dom'
 
 
 // import api from "./api";
-// import jwtDecode from "jwt-decode";
+import jwtDecode from "jwt-decode";
 import * as serviceWorker from './serviceWorker';
 import './styles/main.scss';
 
@@ -25,6 +25,8 @@ import SignIn from './layouts/auth/SignIn';
 import SignUp from './layouts/auth/SignUp';
 import Message from './components/Message';
 
+import { getInformationUser } from "./actions/auth";
+
 const composeEnhancers = composeWithDevTools({
   // Specify name here, actionsBlacklist, actionsCreators and other options if needed
 })
@@ -34,13 +36,13 @@ const store = createStore(
   composeEnhancers(applyMiddleware(thunk))
 )
 
-// const token = localStorage.getItem("tokenBusTicket");
-// if (token) {
-//   api.defaults.headers.common["token"] = token;
-//   api.defaults.headers.common["Content-Type"] = "application/json";
-//   const dataUser = jwtDecode(token);
-//   store.dispatch(getInformationUser(dataUser));
-// }
+const token = localStorage.getItem("tokenBusTicket");
+if (token) {
+  // api.defaults.headers.common["token"] = token;
+  // api.defaults.headers.common["Content-Type"] = "application/json";
+  const dataUser = jwtDecode(token);
+  store.dispatch(getInformationUser(dataUser));
+}
 
 ReactDOM.render(
   <Provider store={store}>

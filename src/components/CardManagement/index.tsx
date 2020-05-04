@@ -4,28 +4,17 @@ import { connect } from "react-redux";
 import { toggleModal } from "../../actions/main";
 
 import Typography from '@material-ui/core/Typography';
-
-
-import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import TableCard from './TableCard';
 
 import GeneralActions from "../../actions/generalActions";
 import ITFGeneralActions from "../../interfaces/generalActions";
 
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    button: {
-      margin: theme.spacing(1),
-    }
-  }),
-);
 
 interface ICardProps {
   toggleModal: (value: boolean) => void
 }
 
 const CardManagement: React.FunctionComponent<ICardProps & ITFGeneralActions> = (props) => {
-  const classes = useStyles();
 
   return (
     <React.Fragment>

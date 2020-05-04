@@ -127,7 +127,6 @@ const Navbar = (props: NavbarProps & RouteComponentProps) => {
   const renderAccount = () => {
     return (
       <React.Fragment>
-        <Button color="inherit" onClick={() => props.history.push("/trips")}>TRIPS</Button>
         <IconButton aria-label="notifications" color="inherit">
           <NotificationsIcon />
         </IconButton>
@@ -143,7 +142,7 @@ const Navbar = (props: NavbarProps & RouteComponentProps) => {
           >
             <FaceIcon />
           </IconButton>
-          <Typography variant="overline" className="ml-05">{_.get(props, "userInformation.fullName", "")}</Typography>
+          <Typography variant="overline" className="ml-05">{_.get(props, "userInformation.name", "")}</Typography>
         </div>
 
       </React.Fragment>

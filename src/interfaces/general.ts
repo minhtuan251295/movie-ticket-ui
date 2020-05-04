@@ -7,6 +7,7 @@ export interface Genre {
 export interface Movie {
   name: string,
   director: string,
+  imageURL: string,
   genreId: number,
   imdb: number,
   premiereDate: string | Date,
