@@ -8,6 +8,7 @@ import Sidebar from "../../components/Sidebar";
 import DashBoard from '../../components/Dashboard';
 import GenresContainer from '../../containers/GenresContainer';
 import MoviesContainer from '../../containers/MoviesContainer';
+import CinemasContainer from '../../containers/CinemasContainer';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -39,6 +40,7 @@ const Admin = (props: AdminProps) => {
           <Route path="/admin/dashboard" exact component={DashBoard} />
           <Route path="/admin/genres" exact component={GenresContainer} />
           <Route path="/admin/movies" exact component={MoviesContainer} />
+          <Route path="/admin/cinemas" exact component={CinemasContainer} />
         </Switch>
       </main>
     </div>

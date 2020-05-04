@@ -45,10 +45,10 @@ export default (WrapperComponent: any) => {
 
     //DELETE DATA
     const deleteData = (type: string, typeSingular: string, id: string) => {
-      const newType: string = "CREATE_" + _.upperCase(typeSingular);
+      const newType: string = "DELETE_" + _.upperCase(typeSingular);
       api.delete(`${type}/${id}`)
         .then((res) => {
-          props.dispatchData(newType, res.data);
+          props.dispatchData(newType, id);
           props.dispatchSuccessMessage("Delete")
         })
         .catch((err) => props.dispatchFailMessage())

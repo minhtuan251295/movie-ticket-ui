@@ -164,6 +164,30 @@ const Sidebar: React.FunctionComponent<ISidebarProps & RouteComponentProps> = (p
               </ListItemIcon>
               <ListItemText primary="Movies" />
             </ListItem>
+
+            <ListItem button className={classes.nested}
+              selected={selectedIndex === 3}
+              onClick={(event) => {
+                handleListItemClick(event, 3);
+                goToAnotherPage("/admin/cinemas");
+              }}>
+              <ListItemIcon>
+                <CardTravel />
+              </ListItemIcon>
+              <ListItemText primary="Cinemas" />
+            </ListItem>
+
+            <ListItem button className={classes.nested}
+              selected={selectedIndex === 4}
+              onClick={(event) => {
+                handleListItemClick(event, 4);
+                goToAnotherPage("/admin/rooms");
+              }}>
+              <ListItemIcon>
+                <CardTravel />
+              </ListItemIcon>
+              <ListItemText primary="Rooms" />
+            </ListItem>
           </List>
         </Collapse>
 

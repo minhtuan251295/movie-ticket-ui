@@ -14,3 +14,9 @@ export interface Movie {
   duration: number,
   id?: string | number,
 }
+
+export interface Cinema {
+  name: string,
+  address: string,
+  id?: string | number,
+}

@@ -7,11 +7,11 @@ import _ from "lodash";
 
 import ModalGenre from "./ModalGenre";
 import ModalMovie from "./ModalMovie";
+import ModalCinema from "./ModalCinema";
 
 interface ModalProps {
   openModal: boolean,
   toggleModal: (value: boolean) => void,
-
 }
 
 const Modal = (props: ModalProps) => {
@@ -19,9 +19,25 @@ const Modal = (props: ModalProps) => {
   const { pathname } = window.location;
   const type = _.last(pathname.split("/"));
 
+  const renderContent = () => {
+    switch (type) {
+      case "genres":
+        return <ModalGenre />
+
+      case "movies":
+        return <ModalMovie />
+
+      case "cinemas":
+        return <ModalCinema />
+
+      default:
+        return "";
+    }
+  }
+
   return (
     <Dialog open={props.openModal} onClose={() => props.toggleModal(false)} aria-labelledby="form-dialog-title">
-      {type === "genres" ? <ModalGenre /> : <ModalMovie />}
+      {renderContent()}
     </Dialog>
   );
 }
