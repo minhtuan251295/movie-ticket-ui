@@ -13,8 +13,13 @@ import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
 import Store from "@material-ui/icons/Store";
 import Collapse from '@material-ui/core/Collapse';
-import CardTravel from "@material-ui/icons/CardTravel";
-
+// import CardTravel from "@material-ui/icons/CardTravel";
+import Movie from "@material-ui/icons/Movie";
+import Theaters from "@material-ui/icons/Theaters";
+import Room from "@material-ui/icons/Room";
+import Schedule from "@material-ui/icons/Schedule";
+import SupervisorAccount from "@material-ui/icons/SupervisorAccount";
+import CreditCard from "@material-ui/icons/CreditCard";
 
 import { connect } from "react-redux";
 import { toggleDrawer } from "../../actions/main";
@@ -85,6 +90,26 @@ const Sidebar: React.FunctionComponent<ISidebarProps & RouteComponentProps> = (p
 
     case "movies":
       value = 2;
+      break;
+
+    case "cinemas":
+      value = 3;
+      break;
+
+    case "rooms":
+      value = 4;
+      break;
+
+    case "schedules":
+      value = 5;
+      break;
+
+    case "users":
+      value = 6;
+      break;
+
+    case "cards":
+      value = 7;
       break;
 
     default:
@@ -160,7 +185,7 @@ const Sidebar: React.FunctionComponent<ISidebarProps & RouteComponentProps> = (p
                 goToAnotherPage("/admin/movies");
               }}>
               <ListItemIcon>
-                <CardTravel />
+                <Movie />
               </ListItemIcon>
               <ListItemText primary="Movies" />
             </ListItem>
@@ -172,7 +197,7 @@ const Sidebar: React.FunctionComponent<ISidebarProps & RouteComponentProps> = (p
                 goToAnotherPage("/admin/cinemas");
               }}>
               <ListItemIcon>
-                <CardTravel />
+                <Theaters />
               </ListItemIcon>
               <ListItemText primary="Cinemas" />
             </ListItem>
@@ -184,9 +209,45 @@ const Sidebar: React.FunctionComponent<ISidebarProps & RouteComponentProps> = (p
                 goToAnotherPage("/admin/rooms");
               }}>
               <ListItemIcon>
-                <CardTravel />
+                <Room />
               </ListItemIcon>
               <ListItemText primary="Rooms" />
+            </ListItem>
+
+            <ListItem button className={classes.nested}
+              selected={selectedIndex === 5}
+              onClick={(event) => {
+                handleListItemClick(event, 5);
+                goToAnotherPage("/admin/schedules");
+              }}>
+              <ListItemIcon>
+                <Schedule />
+              </ListItemIcon>
+              <ListItemText primary="Schedules" />
+            </ListItem>
+
+            <ListItem button className={classes.nested}
+              selected={selectedIndex === 6}
+              onClick={(event) => {
+                handleListItemClick(event, 6);
+                goToAnotherPage("/admin/users");
+              }}>
+              <ListItemIcon>
+                <SupervisorAccount />
+              </ListItemIcon>
+              <ListItemText primary="Users" />
+            </ListItem>
+
+            <ListItem button className={classes.nested}
+              selected={selectedIndex === 7}
+              onClick={(event) => {
+                handleListItemClick(event, 7);
+                goToAnotherPage("/admin/cards");
+              }}>
+              <ListItemIcon>
+                <CreditCard />
+              </ListItemIcon>
+              <ListItemText primary="Cards" />
             </ListItem>
           </List>
         </Collapse>

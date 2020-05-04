@@ -17,24 +17,20 @@ import { toggleModal } from "../../../actions/main";
 import GeneralActions from "../../../actions/generalActions";
 import ITFGeneralActions from "../../../interfaces/generalActions";
 
+import M from "moment";
 import _ from "lodash";
 
-import M from "moment/moment";
-
-interface ITableMovieProps {
+interface ITableScheduleProps {
+  schedules: Array<ITF.Schedule>,
+  rooms: Array<ITF.Room>,
   movies: Array<ITF.Movie>,
-  genres: Array<ITF.Genre>,
   toggleModal: (value: boolean) => void,
 }
 
 interface Data {
-  name: string,
-  director: string,
-  genre: number,
-  imdb: number,
-  premiereDate: string,
-  description: string,
-  duration: number,
+  movie: string,
+  room: string,
+  startTime: string | Date,
   actions: string,
 }
 
@@ -45,13 +41,9 @@ interface HeadCell {
 }
 
 const headCells: HeadCell[] = [
-  { id: 'name', numeric: false, label: 'Name Movie' },
-  { id: 'director', numeric: false, label: 'Director' },
-  { id: 'genre', numeric: false, label: 'Genre' },
-  { id: 'imdb', numeric: true, label: 'Imdb' },
-  { id: 'premiereDate', numeric: false, label: 'Premiere date' },
-  { id: 'description', numeric: false, label: 'Description' },
-  { id: 'duration', numeric: true, label: 'Duration' },
+  { id: 'movie', numeric: false, label: 'Movie' },
+  { id: 'room', numeric: false, label: 'Room' },
+  { id: 'startTime', numeric: false, label: 'Start time' },
   { id: 'actions', numeric: false, label: 'Actions' },
 ];
 
@@ -100,7 +92,7 @@ const useStyles = makeStyles((theme: Theme) =>
       top: 20,
       width: 1,
     },
-    imageMovie: {
+    imageSchedule: {
       maxWidth: 200,
     },
     button: {
@@ -110,7 +102,8 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 
-const TableMovie: React.FunctionComponent<ITableMovieProps & ITFGeneralActions> = (props) => {
+const TableSchedule: React.FunctionComponent<ITableScheduleProps & ITFGeneralActions> = (props) => {
+
   const classes = useStyles();
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
@@ -124,11 +117,11 @@ const TableMovie: React.FunctionComponent<ITableMovieProps & ITFGeneralActions> 
     setPage(0);
   };
 
-  const onDeleteMovie = (id: string) => {
-    props.deleteData("movies", "movie", id);
+  const onDeleteSchedule = (id: string) => {
+    props.deleteData("schedules", "schedule", id);
   }
 
-  const emptyRows = rowsPerPage - Math.min(rowsPerPage, props.movies.length - page * rowsPerPage);
+  const emptyRows = rowsPerPage - Math.min(rowsPerPage, props.schedules.length - page * rowsPerPage);
 
   return (
     <React.Fragment>
@@ -142,15 +135,16 @@ const TableMovie: React.FunctionComponent<ITableMovieProps & ITFGeneralActions> 
             >
               <EnhancedTableHead
                 classes={classes}
-                rowCount={props.movies.length}
+                rowCount={props.schedules.length}
               />
               <TableBody>
                 {
-                  (props.movies && !_.isEmpty(props.genres)) ?
+                  (props.schedules && !_.isEmpty(props.movies) && !_.isEmpty(props.rooms)) ?
                     (
-                      props.movies.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                      props.schedules.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                         .map((row, index) => {
-                          const genre: any = props.genres.find((genre: ITF.Genre) => genre.id === row.genreId);
+                          const movie: any = props.movies.find((movie: ITF.Movie) => movie.id === row.movieId);
+                          const room: any = props.rooms.find((room: ITF.Room) => room.id === row.roomId);
                           return (
                             <TableRow
                               hover
@@ -158,27 +152,23 @@ const TableMovie: React.FunctionComponent<ITableMovieProps & ITFGeneralActions> 
                               tabIndex={-1}
                               key={index}
                             >
-                              <TableCell align="left">{row.name}</TableCell>
-                              <TableCell align="left">{row.director}</TableCell>
-                              <TableCell align="left">{genre.name}</TableCell>
-                              <TableCell align="right">{row.imdb}</TableCell>
+                              <TableCell align="left">{movie.name}</TableCell>
+                              <TableCell align="left">{_.get(room, "code", "")}</TableCell>
                               <TableCell align="left">
-                                {M(row.premiereDate, "YYYY-MM-DDTHH:mm:ss").format("DD/MM/YYYY")}
+                                {M(row.startTime, "YYYY-MM-DDTHH:mm:ss").format("DD/MM/YYYY HH:mm")}
                               </TableCell>
-                              <TableCell align="left">{row.description}</TableCell>
-                              <TableCell align="right">{row.duration}</TableCell>
                               <TableCell align="left">
-                                <Button color="secondary" onClick={() => onDeleteMovie(row.id?.toString() || "")}>Delete</Button>
+                                <Button color="secondary" onClick={() => onDeleteSchedule(row.id?.toString() || "")}>Delete</Button>
                                 <Button color="primary" onClick={() => {
                                   props.toggleModal(true);
-                                  props.getDataById("movies", "movie", row.id?.toString() || "")
+                                  props.getDataById("schedules", "schedule", row.id?.toString() || "")
                                 }}>Edit</Button>
                               </TableCell>
                             </TableRow>
                           );
                         })
-                    ) : ""
-                }
+                    )
+                    : <React.Fragment></React.Fragment>}
                 {emptyRows > 0 && (
                   <TableRow>
                     <TableCell colSpan={6} />
@@ -190,7 +180,7 @@ const TableMovie: React.FunctionComponent<ITableMovieProps & ITFGeneralActions> 
           <TablePagination
             rowsPerPageOptions={[5, 10, 25]}
             component="div"
-            count={props.movies.length}
+            count={props.schedules.length}
             rowsPerPage={rowsPerPage}
             page={page}
             onChangePage={handleChangePage}
@@ -204,9 +194,10 @@ const TableMovie: React.FunctionComponent<ITableMovieProps & ITFGeneralActions> 
 
 const mapStateToProps = (state: any) => {
   return {
+    schedules: state.schedules,
     movies: state.movies,
-    genres: state.genres,
+    rooms: state.rooms,
   }
 }
 
-export default connect(mapStateToProps, { toggleModal })(GeneralActions(TableMovie));
+export default connect(mapStateToProps, { toggleModal })(GeneralActions(TableSchedule));

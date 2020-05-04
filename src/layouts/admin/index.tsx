@@ -9,6 +9,10 @@ import DashBoard from '../../components/Dashboard';
 import GenresContainer from '../../containers/GenresContainer';
 import MoviesContainer from '../../containers/MoviesContainer';
 import CinemasContainer from '../../containers/CinemasContainer';
+import RoomsContainer from '../../containers/RoomsContainer';
+import SchedulesContainer from '../../containers/SchedulesContainer';
+import UsersContainer from '../../containers/UsersContainer';
+import CardsContainer from '../../containers/CardsContainer';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -41,6 +45,10 @@ const Admin = (props: AdminProps) => {
           <Route path="/admin/genres" exact component={GenresContainer} />
           <Route path="/admin/movies" exact component={MoviesContainer} />
           <Route path="/admin/cinemas" exact component={CinemasContainer} />
+          <Route path="/admin/rooms" exact component={RoomsContainer} />
+          <Route path="/admin/schedules" exact component={SchedulesContainer} />
+          <Route path="/admin/users" exact component={UsersContainer} />
+          <Route path="/admin/cards" exact component={CardsContainer} />
         </Switch>
       </main>
     </div>

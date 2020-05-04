@@ -19,22 +19,15 @@ import ITFGeneralActions from "../../../interfaces/generalActions";
 
 import _ from "lodash";
 
-import M from "moment/moment";
-
-interface ITableMovieProps {
-  movies: Array<ITF.Movie>,
-  genres: Array<ITF.Genre>,
+interface ITableCardProps {
+  cards: Array<ITF.Card>,
+  users: Array<ITF.User>,
   toggleModal: (value: boolean) => void,
 }
 
 interface Data {
-  name: string,
-  director: string,
-  genre: number,
-  imdb: number,
-  premiereDate: string,
-  description: string,
-  duration: number,
+  userId: string,
+  level: string,
   actions: string,
 }
 
@@ -45,13 +38,8 @@ interface HeadCell {
 }
 
 const headCells: HeadCell[] = [
-  { id: 'name', numeric: false, label: 'Name Movie' },
-  { id: 'director', numeric: false, label: 'Director' },
-  { id: 'genre', numeric: false, label: 'Genre' },
-  { id: 'imdb', numeric: true, label: 'Imdb' },
-  { id: 'premiereDate', numeric: false, label: 'Premiere date' },
-  { id: 'description', numeric: false, label: 'Description' },
-  { id: 'duration', numeric: true, label: 'Duration' },
+  { id: 'userId', numeric: false, label: 'User' },
+  { id: 'level', numeric: false, label: 'Level' },
   { id: 'actions', numeric: false, label: 'Actions' },
 ];
 
@@ -100,7 +88,7 @@ const useStyles = makeStyles((theme: Theme) =>
       top: 20,
       width: 1,
     },
-    imageMovie: {
+    imageCard: {
       maxWidth: 200,
     },
     button: {
@@ -110,7 +98,8 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 
-const TableMovie: React.FunctionComponent<ITableMovieProps & ITFGeneralActions> = (props) => {
+const TableCard: React.FunctionComponent<ITableCardProps & ITFGeneralActions> = (props) => {
+
   const classes = useStyles();
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
@@ -124,11 +113,11 @@ const TableMovie: React.FunctionComponent<ITableMovieProps & ITFGeneralActions> 
     setPage(0);
   };
 
-  const onDeleteMovie = (id: string) => {
-    props.deleteData("movies", "movie", id);
+  const onDeleteCard = (id: string) => {
+    props.deleteData("cards", "card", id);
   }
 
-  const emptyRows = rowsPerPage - Math.min(rowsPerPage, props.movies.length - page * rowsPerPage);
+  const emptyRows = rowsPerPage - Math.min(rowsPerPage, props.cards.length - page * rowsPerPage);
 
   return (
     <React.Fragment>
@@ -142,42 +131,26 @@ const TableMovie: React.FunctionComponent<ITableMovieProps & ITFGeneralActions> 
             >
               <EnhancedTableHead
                 classes={classes}
-                rowCount={props.movies.length}
+                rowCount={props.cards.length}
               />
               <TableBody>
                 {
-                  (props.movies && !_.isEmpty(props.genres)) ?
-                    (
-                      props.movies.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                        .map((row, index) => {
-                          const genre: any = props.genres.find((genre: ITF.Genre) => genre.id === row.genreId);
-                          return (
-                            <TableRow
-                              hover
-                              role="checkbox"
-                              tabIndex={-1}
-                              key={index}
-                            >
-                              <TableCell align="left">{row.name}</TableCell>
-                              <TableCell align="left">{row.director}</TableCell>
-                              <TableCell align="left">{genre.name}</TableCell>
-                              <TableCell align="right">{row.imdb}</TableCell>
-                              <TableCell align="left">
-                                {M(row.premiereDate, "YYYY-MM-DDTHH:mm:ss").format("DD/MM/YYYY")}
-                              </TableCell>
-                              <TableCell align="left">{row.description}</TableCell>
-                              <TableCell align="right">{row.duration}</TableCell>
-                              <TableCell align="left">
-                                <Button color="secondary" onClick={() => onDeleteMovie(row.id?.toString() || "")}>Delete</Button>
-                                <Button color="primary" onClick={() => {
-                                  props.toggleModal(true);
-                                  props.getDataById("movies", "movie", row.id?.toString() || "")
-                                }}>Edit</Button>
-                              </TableCell>
-                            </TableRow>
-                          );
-                        })
-                    ) : ""
+                  (props.cards && !_.isEmpty(props.users)) ?
+                    (props.cards.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                      .map((row, index) => {
+                        const user: any = props.users.map((user: ITF.User) => user.id === row.userId);
+                        return (
+                          <TableRow
+                            hover
+                            role="checkbox"
+                            tabIndex={-1}
+                            key={index}
+                          >
+                            <TableCell align="left">{user.name}</TableCell>
+                            <TableCell align="left">{row.level}</TableCell>
+                          </TableRow>
+                        );
+                      })) : ""
                 }
                 {emptyRows > 0 && (
                   <TableRow>
@@ -190,7 +163,7 @@ const TableMovie: React.FunctionComponent<ITableMovieProps & ITFGeneralActions> 
           <TablePagination
             rowsPerPageOptions={[5, 10, 25]}
             component="div"
-            count={props.movies.length}
+            count={props.cards.length}
             rowsPerPage={rowsPerPage}
             page={page}
             onChangePage={handleChangePage}
@@ -204,9 +177,9 @@ const TableMovie: React.FunctionComponent<ITableMovieProps & ITFGeneralActions> 
 
 const mapStateToProps = (state: any) => {
   return {
-    movies: state.movies,
-    genres: state.genres,
+    cards: state.cards,
+    users: state.users,
   }
 }
 
-export default connect(mapStateToProps, { toggleModal })(GeneralActions(TableMovie));
+export default connect(mapStateToProps, { toggleModal })(GeneralActions(TableCard));

@@ -8,6 +8,9 @@ import _ from "lodash";
 import ModalGenre from "./ModalGenre";
 import ModalMovie from "./ModalMovie";
 import ModalCinema from "./ModalCinema";
+import ModalRoom from './ModalRoom';
+import ModalSchedule from './ModalSchedule';
+import ModalUser from './ModalUser';
 
 interface ModalProps {
   openModal: boolean,
@@ -29,6 +32,15 @@ const Modal = (props: ModalProps) => {
 
       case "cinemas":
         return <ModalCinema />
+
+      case "rooms":
+        return <ModalRoom />
+
+      case "schedules":
+        return <ModalSchedule />
+
+      case "users":
+        return <ModalUser />
 
       default:
         return "";
