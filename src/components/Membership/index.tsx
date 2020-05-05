@@ -87,15 +87,12 @@ const Membership: React.FunctionComponent<any> = (props) => {
       props.createData("cards", "card", {
         level,
         userId: Number(userId)
-      })
-        .then(() => {
-          setCard({
-            ...card,
-            level
-          })
+      }, false)
+        .then((res: any) => {
+          setCard(res.data)
         })
     } else {
-      // update - PATCH /cards
+      // update - PUT /cards
       props.updateData("cards", "card", {
         level,
         userId: Number(userId)

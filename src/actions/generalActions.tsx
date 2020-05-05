@@ -29,12 +29,16 @@ export default (WrapperComponent: any) => {
     }
 
     //CREATE DATA
-    const createData = (type: string, typeSingular: string, data: any) => {
+    const createData = (type: string, typeSingular: string, data: any, shouldDispatch: boolean = true) => {
       const newType: string = "CREATE_" + _.upperCase(typeSingular);
       return api.post(`${type}`, data)
         .then((res) => {
-          props.dispatchData(newType, res.data);
-          props.dispatchSuccessMessage("Create")
+          if (shouldDispatch) {
+            props.dispatchData(newType, res.data);
+            props.dispatchSuccessMessage("Create")
+          }
+          console.log("createData -> res", res)
+          return Promise.resolve(res);
         })
         .catch((err) => {
           props.dispatchFailMessage()
