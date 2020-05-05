@@ -24,6 +24,7 @@ import Admin from './layouts/admin';
 import SignIn from './layouts/auth/SignIn';
 import SignUp from './layouts/auth/SignUp';
 import Message from './components/Message';
+import Membership from './components/Membership';
 
 import { getInformationUser } from "./actions/auth";
 
@@ -52,10 +53,9 @@ ReactDOM.render(
         <Switch>
           <Route path="/signin" exact component={SignIn} />
           <Route path="/signup" exact component={SignUp} />
-          {/* <Guard path="/trips" exact>
-            <TripContainer />
-          </Guard>
-          <Guard path="/account" exact>
+          <Route path="/membership" exact component={Membership} />
+
+          {/* <Guard path="/account" exact>
             <Account />
           </Guard>  
           <Guard path="/admin">

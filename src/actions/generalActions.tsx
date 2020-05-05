@@ -56,17 +56,35 @@ export default (WrapperComponent: any) => {
     }
 
     //UPDATE DATA
-    const updateData = (type: string, typeSingular: string, data: any, id: string) => {
+    const updateData = (type: string, typeSingular: string, data: any, id: string, shouldDispatch: boolean = true) => {
       const newTypeUpdate: string = "UPDATE_" + _.upperCase(typeSingular);
       const newTypeGetById: string = "GET_" + _.upperCase(typeSingular) + "_BY_ID";
-      api.put(`${type}/${id}`, data)
+      return api.put(`${type}/${id}`, data)
         .then((res) => {
-          props.dispatchData(newTypeUpdate, { data, id });
-          props.dispatchData(newTypeGetById, {});
+          if (shouldDispatch) {
+            props.dispatchData(newTypeUpdate, { data, id });
+            props.dispatchData(newTypeGetById, {});
+          }
           props.dispatchSuccessMessage("Update")
         })
-        .catch((err) => props.dispatchFailMessage())
+        .catch((err) => {
+          console.log("err")
+          props.dispatchFailMessage()
+        })
     }
+
+    //PATCH DATA
+    // const patchData = (type: string, typeSingular: string, data: any, id: string) => {
+    //   const newTypePatch: string = "PATCH_" + _.upperCase(typeSingular);
+    //   const newTypeGetById: string = "GET_" + _.upperCase(typeSingular) + "_BY_ID";
+    //   api.put(`${type}/${id}`, data)
+    //     .then((res) => {
+    //       props.dispatchData(newTypePatch, { data, id });
+    //       props.dispatchData(newTypeGetById, {});
+    //       props.dispatchSuccessMessage("Patch")
+    //     })
+    //     .catch((err) => props.dispatchFailMessage())
+    // }
 
     //RESET DATA
     const resetData = (typeSingular: string) => {
