@@ -56,19 +56,15 @@ ReactDOM.render(
         <Switch>
           <Route path="/signin" exact component={SignIn} />
           <Route path="/signup" exact component={SignUp} />
-          <Route path="/membership" exact component={Membership} />
-
-          {/* <Guard path="/account" exact>
-          {/* <Guard path="/membership" exact>
-            <TripContainer />
-          </Guard> */}
+          <Guard path="/membership" exact>
+            <Membership />
+          </Guard>
           <Guard path="/account" exact>
             <Account />
           </Guard>
           <Guard path="/admin">
             <Admin />
           </Guard>
-          <Route path="/admin" component={Admin} />
           <Route path="/film/:filmId" exact component={PageDetail} />
           <Route path="/" exact component={App} />
         </Switch>

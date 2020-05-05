@@ -29,7 +29,6 @@ interface IMovieProps {
 
 const MovieManagement: React.FunctionComponent<IMovieProps & ITFGeneralActions> = (props) => {
   const classes = useStyles();
-
   return (
     <React.Fragment>
       <div className="content-admin__header">

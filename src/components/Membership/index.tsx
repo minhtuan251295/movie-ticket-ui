@@ -77,7 +77,7 @@ const Membership: React.FunctionComponent<any> = (props) => {
         setCard(res.data);
       })
       .catch(console.log)
-  }, [])
+  }, []) // eslint-disable-line 
 
   const subscribeOrUpdateLevel = (level: string) => {
     const userId = _.get(props, "userInformation.id");

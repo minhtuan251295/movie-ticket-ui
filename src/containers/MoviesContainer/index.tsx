@@ -13,6 +13,7 @@ const MoviesContainer: React.FunctionComponent<IMoviesContainerProps & ITFGenera
 
   React.useEffect(() => {
     getData("movies");
+    getData("genres");
   }, [getData])
 
 
