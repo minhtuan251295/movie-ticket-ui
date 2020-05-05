@@ -127,6 +127,7 @@ const Navbar = (props: NavbarProps & RouteComponentProps) => {
   const renderAccount = () => {
     return (
       <React.Fragment>
+        <Button color="inherit">Membership</Button>
         <IconButton aria-label="notifications" color="inherit">
           <NotificationsIcon />
         </IconButton>
