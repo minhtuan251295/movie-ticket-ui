@@ -11,7 +11,7 @@ export const login = (dataUser: ITF.User, callback?: () => void) => {
   return (dispatch: Dispatch) => {
     api.post("/users/login", dataUser)
       .then((res) => {
-        localStorage.setItem("tokenBusTicket", res.data.token);
+        localStorage.setItem("tokenMovieTicket", res.data.token);
         api.defaults.headers.common["token"] = res.data.token;
         api.defaults.headers.common["Content-Type"] = "application/json";
         const data = jwtDecode(res.data.token);
@@ -81,7 +81,7 @@ export const register = (dataUser: any, callback?: () => void) => {
 
 export const logout = (callback: () => void) => {
   return (dispatch: Dispatch) => {
-    localStorage.removeItem("tokenBusTicket");
+    localStorage.removeItem("tokenMovieTicket");
     dispatch({
       type: Types.REMOVE_USER_INFORMATION,
     })

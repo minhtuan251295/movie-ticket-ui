@@ -98,7 +98,7 @@ const Navbar = (props: NavbarProps & RouteComponentProps) => {
             <ClickAwayListener onClickAway={handleClose}>
               <MenuList autoFocusItem={open} id="menu-list-grow" onKeyDown={handleListKeyDown}>
                 {
-                  _.get(props, "userInformation.userType", "") === "admin" ?
+                  _.get(props, "userInformation.role", "") === "admin" ?
                     <MenuItem onClick={(e) => {
                       handleClose(e);
                       props.history.push("/admin/dashboard");

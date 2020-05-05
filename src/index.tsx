@@ -24,6 +24,8 @@ import Admin from './layouts/admin';
 import SignIn from './layouts/auth/SignIn';
 import SignUp from './layouts/auth/SignUp';
 import Message from './components/Message';
+import Account from "./components/Account";
+import Guard from "./components/Guard";
 
 import { getInformationUser } from "./actions/auth";
 
@@ -36,7 +38,7 @@ const store = createStore(
   composeEnhancers(applyMiddleware(thunk))
 )
 
-const token = localStorage.getItem("tokenBusTicket");
+const token = localStorage.getItem("tokenMovieTicket");
 if (token) {
   // api.defaults.headers.common["token"] = token;
   // api.defaults.headers.common["Content-Type"] = "application/json";
@@ -52,15 +54,15 @@ ReactDOM.render(
         <Switch>
           <Route path="/signin" exact component={SignIn} />
           <Route path="/signup" exact component={SignUp} />
-          {/* <Guard path="/trips" exact>
+          {/* <Guard path="/membership" exact>
             <TripContainer />
-          </Guard>
+          </Guard> */}
           <Guard path="/account" exact>
             <Account />
-          </Guard>  
+          </Guard>
           <Guard path="/admin">
-            <Admin /> 
-          </Guard> */}
+            <Admin />
+          </Guard>
           <Route path="/admin" component={Admin} />
           <Route path="/" exact component={App} />
         </Switch>
