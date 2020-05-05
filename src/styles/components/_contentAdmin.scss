@@ -4,3 +4,9 @@
     justify-content: space-between;
   }
 }
+
+.movie-seat{
+  .MuiDialog-paperWidthSm{
+    max-width: 1000px;
+  }
+}
