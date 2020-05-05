@@ -33,6 +33,7 @@ export interface Schedule {
   roomId: string,
   startTime: string | Date,
   id?: string | number,
+  cinema: Cinema
 }
 
 export interface User {

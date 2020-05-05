@@ -16,7 +16,6 @@ import MenuList from '@material-ui/core/MenuList';
 
 import { connect } from "react-redux";
 
-
 import LoyaltyOutlinedIcon from "@material-ui/icons/LoyaltyOutlined";
 
 import { withRouter, RouteComponentProps } from "react-router-dom";
@@ -24,6 +23,7 @@ import Button from '@material-ui/core/Button';
 import _ from "lodash";
 
 import { toggleDrawer } from "../../actions/main";
+import { logout } from "../../actions/auth";
 
 import FaceIcon from "@material-ui/icons/Face";
 
@@ -58,7 +58,7 @@ const useStyles = makeStyles((theme: Theme) =>
 
 interface NavbarProps {
   toggleDrawer: () => void,
-  // logout: (callback: () => void) => void,
+  logout: (callback: () => void) => void,
   userInformation: object
 }
 
@@ -110,7 +110,7 @@ const Navbar = (props: NavbarProps & RouteComponentProps) => {
                 }}>My account</MenuItem>
                 <MenuItem onClick={(e: any) => {
                   handleClose(e);
-                  // props.logout(() => props.history.push("/signin"));
+                  props.logout(() => props.history.push("/signin"));
                 }}>Logout</MenuItem>
               </MenuList>
             </ClickAwayListener>
@@ -196,4 +196,4 @@ const mapStateToProps = (state: any) => {
   return { userInformation: state.userInformation }
 }
 
-export default connect(mapStateToProps, { toggleDrawer })(withRouter(Navbar));
+export default connect(mapStateToProps, { toggleDrawer, logout })(withRouter(Navbar));
