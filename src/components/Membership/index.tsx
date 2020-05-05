@@ -88,6 +88,12 @@ const Membership: React.FunctionComponent<any> = (props) => {
         level,
         userId: Number(userId)
       })
+        .then(() => {
+          setCard({
+            ...card,
+            level
+          })
+        })
     } else {
       // update - PATCH /cards
       props.updateData("cards", "card", {
@@ -101,6 +107,14 @@ const Membership: React.FunctionComponent<any> = (props) => {
           })
         })
     }
+  }
+
+  const unsubscribe = () => {
+    const userId = _.get(props, "userInformation.id");
+    api.delete(`/users/${userId}/card`)
+      .then(() => {
+        setCard({});
+      })
   }
 
   const tiers = [
@@ -210,6 +224,14 @@ const Membership: React.FunctionComponent<any> = (props) => {
             </Card>
           </Grid>
         ))}
+
+        <Button
+          fullWidth color="primary"
+          onClick={() => unsubscribe()}
+          disabled={_.isEmpty(card)}
+        >
+          Unsubscribe
+        </Button>
       </Grid>
     </Container>
   </React.Fragment>

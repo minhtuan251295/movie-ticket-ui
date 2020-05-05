@@ -33,7 +33,7 @@ export default (WrapperComponent: any) => {
     //CREATE DATA
     const createData = (type: string, typeSingular: string, data: any) => {
       const newType: string = "CREATE_" + _.upperCase(typeSingular);
-      api.post(`${type}`, data)
+      return api.post(`${type}`, data)
         .then((res) => {
           props.dispatchData(newType, res.data);
           props.dispatchSuccessMessage("Create")
