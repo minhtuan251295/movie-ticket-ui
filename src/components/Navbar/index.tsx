@@ -127,7 +127,10 @@ const Navbar = (props: NavbarProps & RouteComponentProps) => {
   const renderAccount = () => {
     return (
       <React.Fragment>
-        <Button color="inherit">Membership</Button>
+        <Button
+          color="inherit"
+          onClick={() => props.history.push("/membership")}
+        >Membership</Button>
         <IconButton aria-label="notifications" color="inherit">
           <NotificationsIcon />
         </IconButton>
