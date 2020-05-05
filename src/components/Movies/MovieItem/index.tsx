@@ -8,22 +8,11 @@ import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogTitle from '@material-ui/core/DialogTitle';
-
 import * as ITF from "../../../interfaces/general";
-import { connect } from "react-redux";
-import List from '@material-ui/core/List';
-import ScheduleItem from "../ScheduleItem";
-import _ from "lodash";
-import Grid from '@material-ui/core/Grid';
-
+import { withRouter, RouteComponentProps } from "react-router-dom";
 
 interface MovieItemProps {
   movie: ITF.Movie,
-  schedules: Array<ITF.Schedule>,
 }
 
 const useStyles = makeStyles({
@@ -35,31 +24,12 @@ const useStyles = makeStyles({
   }
 });
 
-const MovieItem = (props: MovieItemProps) => {
+const MovieItem = (props: MovieItemProps & RouteComponentProps) => {
   const classes = useStyles();
 
-  const [open, setOpen] = React.useState(false);
-
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
-
-  const length = props.schedules.length / 3;
-
-  const list1 = _.slice(props.schedules, 0, length);
-  const list2 = _.slice(props.schedules, length, length + length);
-  const list3 = _.slice(props.schedules, length + length, props.schedules.length - 1);
-
-  const renderElm = (list: Array<ITF.Schedule>) => {
-    return list.map((schedule: ITF.Schedule) => {
-      return (<ScheduleItem key={schedule.id} schedule={schedule} />)
-    })
+  const goToPageDetail = () => {
+    props.history.push(`/film/${props.movie.id}`)
   }
-
   return (
     <React.Fragment>
       <Card className={classes.root}>
@@ -82,54 +52,13 @@ const MovieItem = (props: MovieItemProps) => {
           </CardContent>
         </CardActionArea>
         <CardActions>
-          <Button size="small" color="primary" onClick={handleClickOpen}>
-            Book now
+          <Button size="small" color="primary" onClick={goToPageDetail}>
+            Go to detail
           </Button>
         </CardActions>
       </Card>
-
-      <Dialog
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
-        className="dialog-schedule"
-      >
-        <DialogTitle id="alert-dialog-title">{"Please choose the schedule"}</DialogTitle>
-        <DialogContent>
-          <Grid container spacing={4}>
-            <Grid item xs={4}>
-              <List>
-                {renderElm(list1)}
-              </List>
-            </Grid>
-            <Grid item xs={4}>
-              <List>
-                {renderElm(list2)}
-              </List>
-            </Grid>
-            <Grid item xs={4}>
-              <List>
-                {renderElm(list3)}
-              </List>
-            </Grid>
-          </Grid>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose} color="primary">
-            Disagree
-          </Button>
-          <Button onClick={handleClose} color="primary" autoFocus>
-            Agree
-          </Button>
-        </DialogActions>
-      </Dialog>
     </React.Fragment>
   );
 }
 
-const mapStateToProps = (state: any) => {
-  return { schedules: state.schedules }
-}
-
-export default connect(mapStateToProps)(MovieItem);
+export default withRouter(MovieItem);

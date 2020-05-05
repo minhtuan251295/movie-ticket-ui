@@ -1,0 +1,19 @@
+.circle-avatar{
+  text-align: center;
+  position: relative;
+  &::before{
+    content: "";
+    position: absolute;
+    width: 1px;
+    height: 150px;
+    top: 0px;
+    right: 0px;
+    background-color: rgba(0,0,0,0.52);
+  }
+}
+
+.circle-avatar .MuiSvgIcon-root{
+  width: 100px;
+  height: 100px;
+  margin: 0 auto;
+}

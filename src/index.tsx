@@ -25,8 +25,11 @@ import SignIn from './layouts/auth/SignIn';
 import SignUp from './layouts/auth/SignUp';
 import Message from './components/Message';
 import Membership from './components/Membership';
+import Account from "./components/Account";
+import Guard from "./components/Guard";
 
 import { getInformationUser } from "./actions/auth";
+import PageDetail from './layouts/App/PageDetail';
 
 const composeEnhancers = composeWithDevTools({
   // Specify name here, actionsBlacklist, actionsCreators and other options if needed
@@ -37,7 +40,7 @@ const store = createStore(
   composeEnhancers(applyMiddleware(thunk))
 )
 
-const token = localStorage.getItem("tokenBusTicket");
+const token = localStorage.getItem("tokenMovieTicket");
 if (token) {
   // api.defaults.headers.common["token"] = token;
   // api.defaults.headers.common["Content-Type"] = "application/json";
@@ -56,18 +59,23 @@ ReactDOM.render(
           <Route path="/membership" exact component={Membership} />
 
           {/* <Guard path="/account" exact>
-            <Account />
-          </Guard>  
-          <Guard path="/admin">
-            <Admin /> 
+          {/* <Guard path="/membership" exact>
+            <TripContainer />
           </Guard> */}
+          <Guard path="/account" exact>
+            <Account />
+          </Guard>
+          <Guard path="/admin">
+            <Admin />
+          </Guard>
           <Route path="/admin" component={Admin} />
+          <Route path="/film/:filmId" exact component={PageDetail} />
           <Route path="/" exact component={App} />
         </Switch>
       </div>
     </BrowserRouter>
     <Message />
-  </Provider>,
+  </Provider >,
   document.getElementById('root')
 );
 

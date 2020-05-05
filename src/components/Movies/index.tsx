@@ -22,7 +22,7 @@ const Movies: React.FunctionComponent<IMoviesProps> = (props) => {
     <React.Fragment>
       <CssBaseline />
       <Typography variant="h3" className="my-2 text-center  ">
-        List of Movie
+        List of movie
       </Typography>
       <Container maxWidth="lg">
         <Grid container spacing={4}>
