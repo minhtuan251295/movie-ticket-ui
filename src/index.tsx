@@ -28,6 +28,7 @@ import Account from "./components/Account";
 import Guard from "./components/Guard";
 
 import { getInformationUser } from "./actions/auth";
+import PageDetail from './layouts/App/PageDetail';
 
 const composeEnhancers = composeWithDevTools({
   // Specify name here, actionsBlacklist, actionsCreators and other options if needed
@@ -64,6 +65,7 @@ ReactDOM.render(
             <Admin />
           </Guard>
           <Route path="/admin" component={Admin} />
+          <Route path="/film/:filmId" exact component={PageDetail} />
           <Route path="/" exact component={App} />
         </Switch>
       </div>

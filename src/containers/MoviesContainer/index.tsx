@@ -13,16 +13,12 @@ const MoviesContainer: React.FunctionComponent<IMoviesContainerProps & ITFGenera
 
   React.useEffect(() => {
     getData("movies");
-    getData("rooms");
-    getData("schedules");
-    getData("genres");
   }, [getData])
 
 
   return (
     <React.Fragment>
       {pathname.indexOf("admin") !== -1 ? <MovieManagement /> : <Movies />}
-
     </React.Fragment>
   );
 };

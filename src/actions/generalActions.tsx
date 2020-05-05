@@ -24,10 +24,8 @@ export default (WrapperComponent: any) => {
       const newType: string = "GET_" + _.upperCase(typeSingular) + "_BY_ID";
       return api.get(`${type}/${id}`)
         .then((res) => {
-          console.log(res.data);
           props.dispatchData(newType, res.data)
         })
-        .catch((err) => console.log(err))
     }
 
     //CREATE DATA

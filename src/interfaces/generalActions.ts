@@ -1,6 +1,6 @@
 interface GeneralActions {
   getData: (type: string) => void,
-  getDataById: (type: string, typeSingular: string, id: string) => void,
+  getDataById: (type: string, typeSingular: string, id: string) => Promise<any>,
   createData: (type: string, typeSingular: string, data: any) => void,
   deleteData: (type: string, typeSingular: string, id: string) => void,
   updateData: (type: string, typeSingular: string, data: any, id: string) => void,
