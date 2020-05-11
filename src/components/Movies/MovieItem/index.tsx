@@ -11,6 +11,12 @@ import Typography from '@material-ui/core/Typography';
 import * as ITF from "../../../interfaces/general";
 import { withRouter, RouteComponentProps } from "react-router-dom";
 
+import Dialog from '@material-ui/core/Dialog';
+import CloseIcon from "@material-ui/icons/Close";
+import IconButton from '@material-ui/core/IconButton';
+
+
+
 interface MovieItemProps {
   movie: ITF.Movie,
 }
@@ -26,14 +32,24 @@ const useStyles = makeStyles({
 
 const MovieItem = (props: MovieItemProps & RouteComponentProps) => {
   const classes = useStyles();
+  const [open, setOpen] = React.useState(false);
 
   const goToPageDetail = () => {
     props.history.push(`/film/${props.movie.id}`)
   }
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  }
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
   return (
     <React.Fragment>
       <Card className={classes.root}>
-        <CardActionArea>
+        <CardActionArea onClick={handleClickOpen}>
           <CardMedia
             component="img"
             alt="Contemplative Reptile"
@@ -57,6 +73,13 @@ const MovieItem = (props: MovieItemProps & RouteComponentProps) => {
           </Button>
         </CardActions>
       </Card>
+
+      <Dialog onClose={handleClose} aria-labelledby="customized-dialog-title" open={open} className="dialog-trailer">
+        <iframe title={props.movie.name} width="900" height="530" src={props.movie.trailerURL} frameBorder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
+        <IconButton autoFocus onClick={handleClose} color="primary">
+          <CloseIcon />
+        </IconButton>
+      </Dialog>
     </React.Fragment>
   );
 }

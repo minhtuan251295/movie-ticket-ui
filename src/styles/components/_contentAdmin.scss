@@ -10,3 +10,17 @@
     max-width: 1000px;
   }
 }
+
+.dialog-trailer{
+  .MuiDialog-paperWidthSm{
+    max-width: 900px;
+    overflow: visible;
+  }
+  .MuiIconButton-root{
+    position: absolute;
+    top: -25px;
+    right: -25px;
+    color: white;
+    border: 1px solid white;
+  }
+}

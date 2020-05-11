@@ -51,6 +51,8 @@ const PageDetail: React.FunctionComponent<IPageDetailProps & RouteComponentProps
     </React.Fragment>
   })
 
+  console.log(selectedGenre);
+
   return (
     <React.Fragment>
       {
@@ -61,7 +63,7 @@ const PageDetail: React.FunctionComponent<IPageDetailProps & RouteComponentProps
                 <img src={props.selectedMovie.imageURL} alt="hinhAnhNe" className="w-100" />
               </Grid>
               <Grid item xs={8}>
-                <div className="d-flex-column flex-center h-100">
+                <div className="d-flex-column h-100">
                   <Typography variant="h4" gutterBottom>
                     {props.selectedMovie.name}
                   </Typography>
@@ -73,6 +75,9 @@ const PageDetail: React.FunctionComponent<IPageDetailProps & RouteComponentProps
                   </Typography>
                   <Typography variant="body1" gutterBottom>
                     Genre: {_.get(selectedGenre, "name", "")}
+                  </Typography>
+                  <Typography variant="body1" gutterBottom>
+                    Description: {props.selectedMovie.description}
                   </Typography>
                 </div>
               </Grid>

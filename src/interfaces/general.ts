@@ -10,6 +10,7 @@ export interface Movie {
   imageURL: string,
   genreId: number,
   imdb: number,
+  trailerURL: string,
   premiereDate: string | Date,
   description: string,
   duration: number,
